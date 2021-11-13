@@ -55,7 +55,7 @@ RELAIS_1        = 32 # GPIO 12
 #NA             = 39 # GND
 #NA             = 40 # GPIO 21
 
-GPIO.setup(BTN,         GPIO.IN)
+GPIO.setup(BTN,         GPIO.IN,    pull_up_down=GPIO.PUD_UP)
 GPIO.setup(BUZZER,      GPIO.OUT)
 GPIO.setup(RELAIS_1,    GPIO.OUT)
 
@@ -105,7 +105,7 @@ while True :
     rc522.wait_for_tag() #On attnd qu'une puce RFID passe à portée
     (error, tag_type) = rc522.request() #Quand une puce a été lue, on récupère ses infos
 
-    if (GPIO.input(BTN) == 1):
+    if (GPIO.input(BTN) == 0):
         ouverture()
 
     if not error : #Si on a pas d'erreur
