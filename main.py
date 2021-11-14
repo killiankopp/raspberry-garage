@@ -66,9 +66,9 @@ rc522 = RFID() #On instancie la lib
 
 
 def bip(pin, son = 200, silence = 800):
-    GPIO.output(pin, GPIO.HIGH)
-    time.sleep(son / 1000)
     GPIO.output(pin, GPIO.LOW)
+    time.sleep(son / 1000)
+    GPIO.output(pin, GPIO.HIGH)
     time.sleep(silence / 1000)
 
 
