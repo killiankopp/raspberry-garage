@@ -59,7 +59,7 @@ GPIO.setup(BTN,         GPIO.IN,    pull_up_down=GPIO.PUD_UP)
 GPIO.setup(BUZZER,      GPIO.OUT)
 GPIO.setup(RELAIS_1,    GPIO.OUT)
 
-GPIO.output(RELAIS_1,   GPIO.LOW)
+GPIO.output(RELAIS_1,   GPIO.HIGH)
 
 rc522 = RFID() #On instancie la lib
 
@@ -73,7 +73,7 @@ def bip(pin, son = 200, silence = 800):
 
 
 
-def ouveture():
+def ouverture():
     # impulsion d'ouverture de la porte
     GPIO.output(RELAIS_1, GPIO.LOW)
     time.sleep(1)
