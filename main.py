@@ -82,7 +82,7 @@ def ouveture():
 
     # attente pendant le passage (entrée ou sortie du garage) + 3 bips courts et un long
     time.sleep(6)
-    for x in range(0, 3)
+    for x in range(0, 3):
         bip(BUZZER)
 
     bip(BUZZER, 1000, 0)
