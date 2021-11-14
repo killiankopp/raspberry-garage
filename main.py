@@ -73,7 +73,6 @@ def bip(pin, son = 200, silence = 800):
 
 def ouveture():
     # impulsion d'ouverture de la porte
-    bip(BUZZER, 500, 0)
     GPIO.output(RELAIS_1, GPIO.HIGH)
     time.sleep(1)
     GPIO.output(RELAIS_1, GPIO.LOW)
@@ -93,7 +92,7 @@ def ouveture():
     time.sleep(1)
     GPIO.output(RELAIS_1, GPIO.LOW)
 
-    # attente pendant la fermeture
+    # attente pendant la fermeture de la porte
     time.sleep(22)
 
 
@@ -124,6 +123,7 @@ while True :
 
             for badge in badges :
                 if badge == uid_flat :
+                    bip(BUZZER, 500, 0)
                     print('OK')
                     fichier = open("logs/success.log", "a")
                     fichier.write(s1 + " " + format(uid) +  "\n")
@@ -131,6 +131,9 @@ while True :
 
                     ouverture()
                 else :
+                    bip(BUZZER, 100, 100)
+                    bip(BUZZER, 100, 100)
+                    bip(BUZZER, 100, 100)
                     print('KO')
                     fichier = open("logs/error.log", "a")
                     fichier.write(s1 + " " + format(uid) +  "\n")
