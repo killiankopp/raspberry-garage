@@ -64,8 +64,6 @@ GPIO.output(BUZZER,     False)
 
 rc522 = RFID() #On instancie la lib
 
-GPIO.add_event_detect(BTN,GPIO.RISING,callback=ouverture)
-
 
 
 def bip(pin, son = 200, silence = 800):
@@ -104,7 +102,9 @@ def ouverture():
 
 print('Raspberry-garage : chargement OK') #On affiche un message demandant à l'utilisateur de passer son badge
 
-for x in range(0, 4):
+GPIO.add_event_detect(BTN,GPIO.RISING,callback=ouverture)
+
+for x in range(0, 10):
     bip(BUZZER)
 
 #On va faire une boucle infinie pour lire en boucle
