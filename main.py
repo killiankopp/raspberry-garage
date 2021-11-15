@@ -77,14 +77,14 @@ def bip(pin, son = 200, silence = 800):
 def ouverture():
     # impulsion d'ouverture de la porte
     GPIO.output(RELAIS_1, GPIO.LOW)
-    time.sleep(1)
+    time.sleep(2)
     GPIO.output(RELAIS_1, GPIO.HIGH)
 
     # attente pendant l'ouverture de la porte
     time.sleep(15)
 
     # attente pendant le passage (entrée ou sortie du garage) + 3 bips courts et un long
-    time.sleep(6)
+    time.sleep(26)
     for x in range(0, 3):
         bip(BUZZER)
 
@@ -92,7 +92,7 @@ def ouverture():
 
     # impulsion de fermeture de la porte
     GPIO.output(RELAIS_1, GPIO.LOW)
-    time.sleep(1)
+    time.sleep(2)
     GPIO.output(RELAIS_1, GPIO.HIGH)
 
     # attente pendant la fermeture de la porte
@@ -110,7 +110,7 @@ while True :
     rc522.wait_for_tag() #On attnd qu'une puce RFID passe à portée
     (error, tag_type) = rc522.request() #Quand une puce a été lue, on récupère ses infos
 
-    if (GPIO.input(BTN) == 0):
+    if (GPIO.input(BTN) == 1):
         ouverture()
 
     if not error : #Si on a pas d'erreur
