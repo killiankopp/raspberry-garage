@@ -60,16 +60,16 @@ GPIO.setup(BUZZER,      GPIO.OUT)
 GPIO.setup(RELAIS_1,    GPIO.OUT)
 
 GPIO.output(RELAIS_1,   GPIO.HIGH)
-GPIO.output(BUZZER,     false)
+GPIO.output(BUZZER,     False)
 
 rc522 = RFID() #On instancie la lib
 
 
 
 def bip(pin, son = 200, silence = 800):
-    GPIO.output(pin, true)
+    GPIO.output(pin, True)
     time.sleep(son / 1000)
-    GPIO.output(pin, false)
+    GPIO.output(pin, False)
     time.sleep(silence / 1000)
 
 
