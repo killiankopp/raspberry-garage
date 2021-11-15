@@ -60,15 +60,16 @@ GPIO.setup(BUZZER,      GPIO.OUT)
 GPIO.setup(RELAIS_1,    GPIO.OUT)
 
 GPIO.output(RELAIS_1,   GPIO.HIGH)
+GPIO.output(BUZZER,     false)
 
 rc522 = RFID() #On instancie la lib
 
 
 
 def bip(pin, son = 200, silence = 800):
-    GPIO.output(pin, GPIO.LOW)
+    GPIO.output(pin, true)
     time.sleep(son / 1000)
-    GPIO.output(pin, GPIO.HIGH)
+    GPIO.output(pin, false)
     time.sleep(silence / 1000)
 
 
@@ -99,7 +100,7 @@ def ouverture():
 
 
 
-print('Système armé') #On affiche un message demandant à l'utilisateur de passer son badge
+print('Raspberry-garage : chargement OK') #On affiche un message demandant à l'utilisateur de passer son badge
 
 for x in range(0, 4):
     bip(BUZZER)
