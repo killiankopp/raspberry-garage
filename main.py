@@ -74,7 +74,7 @@ def bip(pin, son = 200, silence = 800):
 
 
 
-def ouverture():
+def ouverture(channel=0):
     # impulsion d'ouverture de la porte
     GPIO.output(RELAIS_1, GPIO.LOW)
     time.sleep(2)
