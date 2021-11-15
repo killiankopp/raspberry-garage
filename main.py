@@ -64,6 +64,8 @@ GPIO.output(BUZZER,     False)
 
 rc522 = RFID() #On instancie la lib
 
+GPIO.add_event_detect(BTN,GPIO.RISING,callback=ouverture)
+
 
 
 def bip(pin, son = 200, silence = 800):
@@ -109,9 +111,6 @@ for x in range(0, 4):
 while True :
     rc522.wait_for_tag() #On attnd qu'une puce RFID passe à portée
     (error, tag_type) = rc522.request() #Quand une puce a été lue, on récupère ses infos
-
-    if (GPIO.input(BTN) == 1):
-        ouverture()
 
     if not error : #Si on a pas d'erreur
         (error, uid) = rc522.anticoll() #On nettoie les possibles collisions, ça arrive si plusieurs cartes passent en même temps
