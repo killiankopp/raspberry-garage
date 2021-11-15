@@ -107,7 +107,7 @@ print('Raspberry-garage : chargement OK') #On affiche un message demandant à l'
 GPIO.add_event_detect(BTN,GPIO.RISING,callback=ouverture)
 
 for x in range(0, 10):
-    bip(BUZZER)
+    bip(BUZZER, 100, 100)
 
 #On va faire une boucle infinie pour lire en boucle
 while True :
