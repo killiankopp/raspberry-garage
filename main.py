@@ -24,7 +24,7 @@ GPIO.setwarnings(False) #On désactive les messages d'alerte
 #NA             =  8 # GPIO 14
 #NA             =  9 # GND
 #NA             = 10 # GPIO 15
-BTN             = 11 # GPIO 17
+#NA             = 11 # GPIO 17
 BUZZER          = 12 # GPIO 18
 #NA             = 13 # GPIO 27
 #NA             = 14 # GND
@@ -55,12 +55,11 @@ RELAIS_1        = 32 # GPIO 12
 #NA             = 39 # GND
 #NA             = 40 # GPIO 21
 
-GPIO.setup(BTN,         GPIO.IN,    pull_up_down=GPIO.PUD_UP)
 GPIO.setup(BUZZER,      GPIO.OUT)
 GPIO.setup(RELAIS_1,    GPIO.OUT)
 
-GPIO.output(RELAIS_1,   GPIO.HIGH)
 GPIO.output(BUZZER,     False)
+GPIO.output(RELAIS_1,   GPIO.HIGH)
 
 rc522 = RFID() #On instancie la lib
 
@@ -74,7 +73,7 @@ def bip(pin, son = 200, silence = 800):
 
 
 
-def ouverture(channel=0):
+def ouverture():
     # impulsion d'ouverture de la porte
     print("ouverture")
     GPIO.output(RELAIS_1, GPIO.LOW)
@@ -104,9 +103,7 @@ def ouverture(channel=0):
 
 print('Raspberry-garage : chargement OK') #On affiche un message demandant à l'utilisateur de passer son badge
 
-GPIO.add_event_detect(BTN,GPIO.RISING,callback=ouverture)
-
-for x in range(0, 10):
+for x in range(0, 5):
     bip(BUZZER, 100, 100)
 
 #On va faire une boucle infinie pour lire en boucle
@@ -130,7 +127,7 @@ while True :
 
             for badge in badges :
                 if badge == uid_flat :
-                    bip(BUZZER, 500, 0)
+                    bip(BUZZER, 250, 0)
                     print('OK')
                     fichier = open("logs/success.log", "a")
                     fichier.write(s1 + " " + format(uid) +  "\n")
@@ -138,9 +135,7 @@ while True :
 
                     ouverture()
                 else :
-                    bip(BUZZER, 100, 100)
-                    bip(BUZZER, 100, 100)
-                    bip(BUZZER, 100, 100)
+                    bip(BUZZER, 1000, 0)
                     print('KO')
                     fichier = open("logs/error.log", "a")
                     fichier.write(s1 + " " + format(uid) +  "\n")
