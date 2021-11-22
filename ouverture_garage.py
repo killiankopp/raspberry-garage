@@ -64,7 +64,7 @@ GPIO.output(RELAIS_1,   GPIO.HIGH)
 
 
 def bip(son = 200, silence = 800):
-    subprocess.call("python3 buz.py " + son + " " + silence, shell=True)
+    subprocess.call("python3 buz.py " + str( son ) + " " + str( silence ), shell=True)
 
 
 
