@@ -96,3 +96,7 @@ GPIO.output(RELAIS_1, GPIO.HIGH)
 
 # attente pendant la fermeture de la porte
 time.sleep(fermeture)
+
+
+
+subprocess.call("python3 clean.py", shell=True)

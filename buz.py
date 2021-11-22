@@ -49,10 +49,18 @@ BUZZER          = 12 # GPIO 18
 
 GPIO.output(BUZZER,     False)
 
-son = 250
-silence = 1000
+
+
+son     = int( sys.argv[1] )
+silence = int( sys.argv[2] )
+
+
 
 GPIO.output(BUZZER, True)
 time.sleep(son / 1000)
 GPIO.output(BUZZER, False)
 time.sleep(silence / 1000)
+
+
+
+subprocess.call("python3 clean.py", shell=True)
