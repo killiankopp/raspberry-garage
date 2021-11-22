@@ -48,6 +48,7 @@ BUZZER          = 12 # GPIO 18
 #NA             = 39 # GND
 #NA             = 40 # GPIO 21
 
+GPIO.setup(BUZZER,      GPIO.OUT)
 GPIO.output(BUZZER,     False)
 
 
