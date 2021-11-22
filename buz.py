@@ -3,6 +3,8 @@
 
 import RPi.GPIO as GPIO
 import time
+import sys
+import subprocess
 
 GPIO.setmode(GPIO.BOARD) #Définit le mode de numérotation (Board)
 GPIO.setwarnings(False) #On désactive les messages d'alerte
