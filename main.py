@@ -1,15 +1,12 @@
 #!/usr/bin/env python3.9
 #-- coding: utf-8 --
 
-import RPi.GPIO as GPIO #Importe la bibliothèque pour contrôler les GPIOs
-from pirc522 import RFID
-import time
-
-# biblio datetime
-from datetime import datetime
-
-# biblio liste des fichiers
-import os
+import RPi.GPIO as GPIO             # GPIO
+from pirc522 import RFID            # RFID
+import time                         # time
+from datetime import datetime       # datetime
+import os                           # fichiers
+import subprocess                   # sous-processus
 
 GPIO.setmode(GPIO.BOARD) #Définit le mode de numérotation (Board)
 GPIO.setwarnings(False) #On désactive les messages d'alerte
@@ -25,7 +22,7 @@ GPIO.setwarnings(False) #On désactive les messages d'alerte
 #NA             =  9 # GND
 #NA             = 10 # GPIO 15
 #NA             = 11 # GPIO 17
-BUZZER          = 12 # GPIO 18
+#BUZZER         = 12 # GPIO 18
 #NA             = 13 # GPIO 27
 #NA             = 14 # GND
 #NA             = 15 # GPIO 22
@@ -55,21 +52,18 @@ RELAIS_1        = 32 # GPIO 12
 #NA             = 39 # GND
 #NA             = 40 # GPIO 21
 
-GPIO.setup(BUZZER,      GPIO.OUT)
+BUZZER = 12
+
 GPIO.setup(RELAIS_1,    GPIO.OUT)
 
-GPIO.output(BUZZER,     False)
 GPIO.output(RELAIS_1,   GPIO.HIGH)
 
 rc522 = RFID() #On instancie la lib
 
 
 
-def bip(pin, son = 200, silence = 800):
-    GPIO.output(pin, True)
-    time.sleep(son / 1000)
-    GPIO.output(pin, False)
-    time.sleep(silence / 1000)
+def bip(son = 200, silence = 800):
+    subprocess.call("python3 buz.py " + son + " " + silence, shell=True)
 
 
 
@@ -88,7 +82,7 @@ def ouverture():
     for x in range(0, 4):
         bip(BUZZER)
 
-    bip(BUZZER, 1000, 0)
+    bip(1000, 0)
 
     # impulsion de fermeture de la porte
     print("fermeture")
@@ -104,7 +98,7 @@ def ouverture():
 print('Raspberry-garage : chargement OK') #On affiche un message demandant à l'utilisateur de passer son badge
 
 for x in range(0, 5):
-    bip(BUZZER, 100, 100)
+    bip(100, 100)
 
 #On va faire une boucle infinie pour lire en boucle
 while True :
@@ -127,7 +121,7 @@ while True :
 
             for badge in badges :
                 if badge == uid_flat :
-                    bip(BUZZER, 250, 0)
+                    bip(250, 0)
                     print('OK')
                     fichier = open("logs/success.log", "a")
                     fichier.write(s1 + " " + format(uid) +  "\n")
@@ -135,7 +129,7 @@ while True :
 
                     ouverture()
                 else :
-                    bip(BUZZER, 1000, 0)
+                    bip(1000, 0)
                     print('KO')
                     fichier = open("logs/error.log", "a")
                     fichier.write(s1 + " " + format(uid) +  "\n")
