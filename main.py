@@ -42,7 +42,7 @@ GPIO.setwarnings(False) #On désactive les messages d'alerte
 #NA             = 29 # GPIO 05
 #NA             = 30 # GND
 #NA             = 31 # GPIO 06
-RELAIS_1        = 32 # GPIO 12
+#RELAIS_1        = 32 # GPIO 12
 #NA             = 33 # GPIO 13
 #NA             = 34 # GND
 #NA             = 35 # GPIO 19
@@ -52,46 +52,18 @@ RELAIS_1        = 32 # GPIO 12
 #NA             = 39 # GND
 #NA             = 40 # GPIO 21
 
-BUZZER = 12
-
-GPIO.setup(RELAIS_1,    GPIO.OUT)
-
-GPIO.output(RELAIS_1,   GPIO.HIGH)
 
 rc522 = RFID() #On instancie la lib
 
 
 
 def bip(son = 200, silence = 800):
-    subprocess.call("python3 buz.py " + son + " " + silence, shell=True)
+    subprocess.call("python3 buz.py " + str( son ) + " " + str( silence ), shell=True)
 
 
 
 def ouverture():
-    # impulsion d'ouverture de la porte
-    print("ouverture")
-    GPIO.output(RELAIS_1, GPIO.LOW)
-    time.sleep(2)
-    GPIO.output(RELAIS_1, GPIO.HIGH)
-
-    # attente pendant l'ouverture de la porte
-    time.sleep(15)
-
-    # attente pendant le passage (entrée ou sortie du garage) + 3 bips courts et un long
-    time.sleep(26)
-    for x in range(0, 4):
-        bip(BUZZER)
-
-    bip(1000, 0)
-
-    # impulsion de fermeture de la porte
-    print("fermeture")
-    GPIO.output(RELAIS_1, GPIO.LOW)
-    time.sleep(2)
-    GPIO.output(RELAIS_1, GPIO.HIGH)
-
-    # attente pendant la fermeture de la porte
-    time.sleep(22)
+    subprocess.call("python3 ouverture_garage.py", shell=True)
 
 
 
