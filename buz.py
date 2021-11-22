@@ -62,7 +62,3 @@ GPIO.output(BUZZER, True)
 time.sleep(son / 1000)
 GPIO.output(BUZZER, False)
 time.sleep(silence / 1000)
-
-
-
-subprocess.call("python3 clean.py", shell=True)
