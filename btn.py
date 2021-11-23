@@ -53,7 +53,7 @@ BTN             = 11 # GPIO 17
 
 
 
-GPIO.setup(BTN, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(BTN, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
 
 
@@ -73,7 +73,6 @@ while True :
     if (etat == 0) :
         print('appui')
         bip(100, 0)
-        #ouverture()
-        time.sleep(5)
+        ouverture()
 
     time.sleep(0.3) #évite la surchauffe du processeur
