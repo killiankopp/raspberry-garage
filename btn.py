@@ -1,10 +1,10 @@
 #!/usr/bin/env python3.9
 #-- coding: utf-8 --
 
+# bouton entre GND et la pin 11
+
 import RPi.GPIO as GPIO             # GPIO
 import time                         # time
-from datetime import datetime       # datetime
-import os                           # fichiers
 import subprocess                   # sous-processus
 
 GPIO.setmode(GPIO.BOARD) #Définit le mode de numérotation (Board)
@@ -20,7 +20,7 @@ GPIO.setwarnings(False) #On désactive les messages d'alerte
 #NA             =  8 # GPIO 14
 #NA             =  9 # GND
 #NA             = 10 # GPIO 15
-#NA             = 11 # GPIO 17
+BTN             = 11 # GPIO 17
 #BUZZER         = 12 # GPIO 18
 #NA             = 13 # GPIO 27
 #NA             = 14 # GND
@@ -41,7 +41,7 @@ GPIO.setwarnings(False) #On désactive les messages d'alerte
 #NA             = 29 # GPIO 05
 #NA             = 30 # GND
 #NA             = 31 # GPIO 06
-RELAIS_1        = 32 # GPIO 12
+#RELAIS_1       = 32 # GPIO 12
 #NA             = 33 # GPIO 13
 #NA             = 34 # GND
 #NA             = 35 # GPIO 19
@@ -51,15 +51,9 @@ RELAIS_1        = 32 # GPIO 12
 #NA             = 39 # GND
 #NA             = 40 # GPIO 21
 
-# Définition des temps en secondes
-ouverture   = 15
-ouvert      = 26
-fermeture   = 22
 
 
-
-GPIO.setup(RELAIS_1,    GPIO.OUT)
-GPIO.output(RELAIS_1,   GPIO.HIGH)
+GPIO.setup(BTN, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 
 
@@ -68,45 +62,18 @@ def bip(son = 200, silence = 800):
 
 
 
-# impulsion d'ouverture de la porte
-now = datetime.now()
-s1 = now.strftime("%Y-%m-%d %H:%M:%S")
-fichier = open("logs/access.log", "a")
-fichier.write(s1 + " ouverture " +  "\n")
-fichier.close()
-
-GPIO.output(RELAIS_1, GPIO.LOW)
-time.sleep(2)
-GPIO.output(RELAIS_1, GPIO.HIGH)
-
-time.sleep(ouverture) # attente pendant l'ouverture de la porte
+def ouverture():
+    subprocess.call("python3 ouverture_garage.py", shell=True)
 
 
 
-# attente pendant le passage (entrée ou sortie du garage) + 4 bips courts et un long
-time.sleep(ouvert)
+while True :
+    etat = GPIO.input(BTN)
 
-for x in range(0, 4):
-    bip(200, 800)
+    if (etat == 0) :
+        print('appui')
+        bip(100, 0)
+        #ouverture()
+        time.sleep(5)
 
-bip(1000, 0)
-
-
-
-# impulsion de fermeture de la porte
-now = datetime.now()
-s1 = now.strftime("%Y-%m-%d %H:%M:%S")
-fichier = open("logs/access.log", "a")
-fichier.write(s1 + " fermeture " +  "\n")
-fichier.close()
-
-GPIO.output(RELAIS_1, GPIO.LOW)
-time.sleep(2)
-GPIO.output(RELAIS_1, GPIO.HIGH)
-
-# attente pendant la fermeture de la porte
-time.sleep(fermeture)
-
-
-
-subprocess.call("python3 clean.py", shell=True)
+    time.sleep(0.3) #évite la surchauffe du processeur
