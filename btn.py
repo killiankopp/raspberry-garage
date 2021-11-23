@@ -71,8 +71,7 @@ while True :
     etat = GPIO.input(BTN)
 
     if (etat == 0) :
-        print('appui')
-        bip(100, 0)
+        bip(250, 0)
         ouverture()
 
     time.sleep(0.3) #évite la surchauffe du processeur
